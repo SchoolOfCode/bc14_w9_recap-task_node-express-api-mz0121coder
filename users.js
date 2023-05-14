@@ -20,8 +20,28 @@ export async function getUserByID(id) {
   return userFound;
 }
 
-export async function createUser(newUser) {}
+export async function createUser(newUser) {
+  const usersJSON = await fs.readFile(fileName);
+  const users = JSON.parse(usersJSON);
+  const user = {
+    id: uuidv4(),
+    first_name: newUser.first_name,
+    last_name: newUser.last_name,
+    email: newUser.email,
+    catchphrase: newUser.catchphrase,
+  };
+  users.push(user);
+  const stringifyUsers = JSON.stringify(users);
+  await fs.writeFile(fileName, stringifyUsers, "utf-8");
+  return user;
+}
 
-export async function updateUserByID(id, updatedUser) {}
+export async function updateUserByID(id, updatedUser) {
+  const usersJSON = await fs.readFile(fileName);
+  const users = JSON.parse(usersJSON);
+}
 
-export async function deleteUserByID(id) {}
+export async function deleteUserByID(id) {
+  const usersJSON = await fs.readFile(fileName);
+  const users = JSON.parse(usersJSON);
+}

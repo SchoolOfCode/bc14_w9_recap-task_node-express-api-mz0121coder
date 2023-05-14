@@ -10,6 +10,7 @@ import {
 
 const app = express();
 const port = 3000;
+app.use(express.json());
 
 // get all users
 app.get("/api/users", async (req, res) => {
@@ -34,10 +35,15 @@ app.get("/api/users/:id", async (req, res) => {
 });
 
 // create new user
-// app.post('/api/users',async(req,res)=>{
-//   const user=await
-// })
-app.use(express.json());
+app.post("/api/users", async (req, res) => {
+  const user = await createUser(req.body);
+  let success = false;
+  if (Object.keys(user).length > 0) {
+    success = true;
+    console.log(`createUser: successful`);
+  }
+  res.send({ success, payload: user });
+});
 
 app.use("/", (req, res) => {
   res.json({
